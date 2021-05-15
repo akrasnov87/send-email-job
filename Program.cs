@@ -101,8 +101,8 @@ namespace Email
 
                     if (user.f_division != 10)
                     {
-                        reports.Add(new PentahoUrlBuilder("count_day_div", "Ежедневный районный отчет по результатам ОДД Агитаторов", "f_division=" + user.f_division + "&n_gos_subdivision=-1"));
-                        reports.Add(new PentahoUrlBuilder("count_period_div", "Сводный районный отчет по результатам ОДД Агитаторов", "f_division=" + user.f_division + "&n_gos_subdivision=-1"));
+                        reports.Add(new PentahoUrlBuilder("count_day_div", "Ежедневный районный отчет по результатам ОДД Агитаторов", "f_division=" + user.f_division));
+                        reports.Add(new PentahoUrlBuilder("count_period_div", "Сводный районный отчет по результатам ОДД Агитаторов", "f_division=" + user.f_division));
                     }
                     else
                     {
