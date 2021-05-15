@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "send-email-job": {
+      "commandName": "Project",
+      "commandLineArgs": "vote-test-db"
+    }
+  }
+}
