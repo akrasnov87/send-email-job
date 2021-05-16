@@ -17,13 +17,13 @@ namespace Email
             MailAddress from = new MailAddress("mysmtp1987@gmail.com", "Александр Краснов");
 
             // передача данных главам
-            p.SendToMain(args[0], from);
+            //p.SendToMain(args[0], from);
 
             // передача данных ответственным за районы
-            p.SendToDivision(args[0], from);
-
+            //p.SendToDivision(args[0], from);
+            
             // передача ответственным за округ
-            p.SendToSubDivision(args[0], from);
+            //p.SendToSubDivision(args[0], from);
 
             // передача ответственным за УИК
             p.SendToUik(args[0], from);
@@ -45,7 +45,7 @@ namespace Email
                 if (!string.IsNullOrEmpty(user.c_email))
                 {
                     List<PentahoUrlBuilder> reports = new List<PentahoUrlBuilder>();
-                    reports.Add(new PentahoUrlBuilder("work_uik", "Ежедневный отчет по УИК в разрезе агитаторов - выход агитаторов на участок работы", "f_division=-1&n_gos_subdivision=-1&n_uik=" + user.f_uik));
+                    reports.Add(new PentahoUrlBuilder("work_uik", "Ежедневный отчет по УИК в разрезе агитаторов - выход агитаторов на участок работы", "f_main_division=-1&f_division=-1&n_gos_subdivision=-1&n_uik=" + user.f_uik));
 
                     reports.Add(new PentahoUrlBuilder("count_day_uik", "Ежедневный отчет по УИК - результаты ОДД Агитаторов", "n_uik=" + user.f_uik));
                     reports.Add(new PentahoUrlBuilder("count_period_uik", "Сводный отчет по УИК - результаты ОДД Агитаторов", "n_uik=" + user.f_uik));
@@ -71,7 +71,7 @@ namespace Email
                 if (!string.IsNullOrEmpty(user.c_email))
                 {
                     List<PentahoUrlBuilder> reports = new List<PentahoUrlBuilder>();
-                    reports.Add(new PentahoUrlBuilder("work_uik", "Ежедневный отчет по УИК в разрезе агитаторов - выход агитаторов на участок работы", "f_division=" + user.f_division + "&n_gos_subdivision=" + user.n_gos_subdivision + "&n_uik=-1"));
+                    reports.Add(new PentahoUrlBuilder("work_uik", "Ежедневный отчет по УИК в разрезе агитаторов - выход агитаторов на участок работы", "f_main_division=-1&f_division=" + user.f_division + "&n_gos_subdivision=" + user.n_gos_subdivision + "&n_uik=-1"));
 
                     reports.Add(new PentahoUrlBuilder("count_day_sub", "Ежедневный окружной отчет по результатам ОДД Агитаторов", "n_gos_subdivision=" + user.n_gos_subdivision));
                     reports.Add(new PentahoUrlBuilder("count_period_sub", "Сводный окружной отчет по результатам ОДД Агитаторов", "n_gos_subdivision=" + user.n_gos_subdivision));
@@ -97,7 +97,7 @@ namespace Email
                 if (!string.IsNullOrEmpty(user.c_email))
                 {
                     List<PentahoUrlBuilder> reports = new List<PentahoUrlBuilder>();
-                    reports.Add(new PentahoUrlBuilder("work_uik", "Ежедневный отчет по УИК в разрезе агитаторов - выход агитаторов на участок работы", "f_division=" + user.f_division + "&n_gos_subdivision=-1&n_uik=-1"));
+                    reports.Add(new PentahoUrlBuilder("work_uik", "Ежедневный отчет по УИК в разрезе агитаторов - выход агитаторов на участок работы", "f_main_division=" + (user.f_division == 10 ? user.f_division : 0) + "&f_division=" + user.f_division + "&n_gos_subdivision=-1&n_uik=-1"));
 
                     if (user.f_division != 10)
                     {
@@ -127,7 +127,7 @@ namespace Email
         {
             // передача данных главам
             List<PentahoUrlBuilder> reports = new List<PentahoUrlBuilder>();
-            reports.Add(new PentahoUrlBuilder("work_uik", "Ежедневный отчет по УИК в разрезе агитаторов - выход агитаторов на участок работы", "f_division=-1&n_gos_subdivision=-1&n_uik=-1"));
+            reports.Add(new PentahoUrlBuilder("work_uik", "Ежедневный отчет по УИК в разрезе агитаторов - выход агитаторов на участок работы", "f_main_division=-1&f_division=-1&n_gos_subdivision=-1&n_uik=-1"));
             reports.Add(new PentahoUrlBuilder("count_day_cheb", "Ежедневный городской (ЧЕБ) отчет по результатам ОДД Агитаторов"));
             reports.Add(new PentahoUrlBuilder("count_period_cheb", "Сводный городской (ЧЕБ) отчет по результатам ОДД Агитаторов"));
             reports.Add(new PentahoUrlBuilder("count_day_nov", "Ежедневный городской (НВЧ) отчет по результатам ОДД Агитаторов"));
