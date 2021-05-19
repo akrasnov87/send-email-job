@@ -52,7 +52,7 @@ namespace Email
 
                     string[] emails = user.c_email.Replace(",", ";").Replace(" ", ";").Split(';');
 
-                    Utilits.SendToMails(from, user.c_login, emails, reports);
+                    Utilits.SendToMails(from, user.c_login, emails, reports, "УИК");
                 }
             }
         }
@@ -78,7 +78,7 @@ namespace Email
 
                     string[] emails = user.c_email.Replace(",", ";").Replace(" ", ";").Split(';');
 
-                    Utilits.SendToMails(from, user.c_login, emails, reports);
+                    Utilits.SendToMails(from, user.c_login, emails, reports, "окружной");
                 }
             }
         }
@@ -113,7 +113,7 @@ namespace Email
 
                     string[] emails = user.c_email.Replace(",", ";").Replace(" ", ";").Split(';');
 
-                    Utilits.SendToMails(from, user.c_login, emails, reports);
+                    Utilits.SendToMails(from, user.c_login, emails, reports, "районный");
                 }
             }
         }
@@ -140,7 +140,7 @@ namespace Email
                 {
                     string[] emails = user.c_email.Replace(",", ";").Replace(" ", ";").Split(';');
 
-                    Utilits.SendToMails(from, user.c_login, emails, reports);
+                    Utilits.SendToMails(from, user.c_login, emails, reports, "городской");
                 }
             }
         }

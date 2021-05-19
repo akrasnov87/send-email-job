@@ -50,7 +50,7 @@ namespace Email
             smtp.Send(mail);
         }
 
-        public static void SendToMails(MailAddress from, string login, string[] emails, List<PentahoUrlBuilder> reports)
+        public static void SendToMails(MailAddress from, string login, string[] emails, List<PentahoUrlBuilder> reports, string title)
         {
             string userDateString = DateTime.Now.AddDays(-1).ToString("dd.MM.yyyy");
             if (emails.Length > 0)
@@ -65,7 +65,7 @@ namespace Email
                         mail.Attachments.Add(new Attachment(Utilits.GetStreamFromUrl(urlBuilder.Url), urlBuilder.Description + urlBuilder.Extension));
                     }
 
-                    mail.Subject = "Ежедневный отчет по результатам ОДД Агитаторов";
+                    mail.Subject = "Ежедневный отчет по результатам ОДД Агитаторов (" + title + ")";
                     mail.Body = FOOTER_TXT + "<p>Во вложении " + mail.Attachments.Count + " отчет (ов) за " + userDateString + ":</p><ul>";
                     foreach (PentahoUrlBuilder urlBuilder in reports)
                     {
