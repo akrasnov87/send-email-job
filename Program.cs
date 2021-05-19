@@ -26,7 +26,7 @@ namespace Email
             //p.SendToSubDivision(args[0], from);
 
             // передача ответственным за УИК
-            p.SendToUik(args[0], from);
+            //p.SendToUik(args[0], from);
 
             Console.WriteLine("send finished");
         }
@@ -73,8 +73,8 @@ namespace Email
                     List<PentahoUrlBuilder> reports = new List<PentahoUrlBuilder>();
                     reports.Add(new PentahoUrlBuilder("work_uik", "Ежедневный отчет по УИК в разрезе агитаторов - выход агитаторов на участок работы", "f_main_division=-1&f_division=" + user.f_division + "&n_gos_subdivision=" + user.n_gos_subdivision + "&n_uik=-1"));
 
-                    reports.Add(new PentahoUrlBuilder("count_day_sub", "Ежедневный окружной отчет по результатам ОДД Агитаторов", "n_gos_subdivision=" + user.n_gos_subdivision));
-                    reports.Add(new PentahoUrlBuilder("count_period_sub", "Сводный окружной отчет по результатам ОДД Агитаторов", "n_gos_subdivision=" + user.n_gos_subdivision));
+                    reports.Add(new PentahoUrlBuilder("count_day_sub", "Ежедневный окружной отчет по результатам ОДД Агитаторов", "f_division=" + user.f_division + "&n_gos_subdivision=" + user.n_gos_subdivision));
+                    reports.Add(new PentahoUrlBuilder("count_period_sub", "Сводный окружной отчет по результатам ОДД Агитаторов", "f_division=" + user.f_division + "&n_gos_subdivision=" + user.n_gos_subdivision));
 
                     string[] emails = user.c_email.Replace(",", ";").Replace(" ", ";").Split(';');
 
