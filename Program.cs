@@ -7,8 +7,7 @@ using System.Net.Mail;
 namespace Email
 {
     class Program
-    {
-        
+    { 
         static void Main(string[] args)
         {
             Program p = new Program();
@@ -17,16 +16,16 @@ namespace Email
             MailAddress from = new MailAddress("mysmtp1987@gmail.com", "Александр Краснов");
 
             // передача данных главам
-            //p.SendToMain(args[0], from);
+            p.SendToMain(args[0], from);
 
             // передача данных ответственным за районы
-            //p.SendToDivision(args[0], from);
+            p.SendToDivision(args[0], from);
             
             // передача ответственным за округ
-            //p.SendToSubDivision(args[0], from);
+            p.SendToSubDivision(args[0], from);
 
             // передача ответственным за УИК
-            //p.SendToUik(args[0], from);
+            p.SendToUik(args[0], from);
 
             Console.WriteLine("send finished");
         }

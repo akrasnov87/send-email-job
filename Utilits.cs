@@ -11,7 +11,8 @@ namespace Email
 {
     public class Utilits
     {
-        static string FOOTER_TXT = "<p style=\"color:red\"><b>Текст письма сформирован автоматически. Прошу не отвечать на адрес отправителя.</b></p>";
+        static string FOOTER_TXT = "<p>Дополнительно отчеты можно создать в веб-интерфейсе сайта <a href=\"http://агитатор21.рус\">http://агитатор21.рус</a> под своим персональным логином и паролем полученным от организаторов.</p>" + 
+            "<p style=\"color:red\"><b>Текст письма сформирован автоматически. Прошу не отвечать на адрес отправителя.</b></p>";
 
         public static List<KeyValuePair<String, String>> KeyValue = new List<KeyValuePair<string, string>>();
 
