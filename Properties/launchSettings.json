@@ -2,7 +2,7 @@
   "profiles": {
     "send-email-job": {
       "commandName": "Project",
-      "commandLineArgs": "vote-test-db"
+      "commandLineArgs": "vote-release-db"
     }
   }
 }
