@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Net.Mail;
+using System.IO;
 
 namespace Email
 {
@@ -11,7 +12,14 @@ namespace Email
         static void Main(string[] args)
         {
             Program p = new Program();
+
+            if (Directory.Exists("temp"))
+            {
+                Directory.Delete("temp", true);
+            }
+
             Console.WriteLine("start processing: " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"));
+            Utilits.Log("send processing: " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"));
 
             MailAddress from = new MailAddress("mysmtp1987@gmail.com", "Александр Краснов");
 
@@ -27,7 +35,9 @@ namespace Email
             // передача ответственным за УИК
             p.SendToUik(args[0], from);
 
-            Console.WriteLine("send finished" + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"));
+            Utilits.Log("send finished " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"));
+            Utilits.SendReportMail(from);
+            Console.WriteLine("send finished " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"));
         }
 
         /// <summary>

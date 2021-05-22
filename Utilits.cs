@@ -29,6 +29,25 @@ namespace Email
             }
         }
 
+        public static void SendReportMail(MailAddress from)
+        {
+            MailAddress to = new MailAddress("akrasnov87@gmail.com");
+            MailMessage mail = new MailMessage(from, to);
+
+            mail.Subject = "Отчет по отправке писем от системы Агитатор";
+
+            string fileName = "log-" + DateTime.Now.ToString("dd.MM.yyyy") + ".txt";
+            if (File.Exists("temp/" + fileName))
+            {
+                mail.Body = File.ReadAllText("temp/" + fileName);
+            }
+            
+            // письмо представляет код html
+            mail.IsBodyHtml = false;
+
+            SendMail(mail);
+        }
+
         public static Stream GetStreamFromUrl(string url)
         {
             if (!Directory.Exists("temp"))
