@@ -16,6 +16,38 @@ namespace Email
 
         public static List<KeyValuePair<String, String>> KeyValue = new List<KeyValuePair<string, string>>();
 
+        public static void Log(string txt)
+        {
+            if (!Directory.Exists("temp"))
+            {
+                Directory.CreateDirectory("temp");
+            }
+            string fileName = "log-"+ DateTime.Now.ToString("dd.MM.yyyy") + ".txt";
+            using (StreamWriter sw = File.AppendText("temp/" + fileName))
+            {
+                sw.WriteLine(txt);
+            }
+        }
+
+        public static void SendReportMail(MailAddress from)
+        {
+            MailAddress to = new MailAddress("akrasnov87@gmail.com");
+            MailMessage mail = new MailMessage(from, to);
+
+            mail.Subject = "Отчет по отправке писем от системы Агитатор";
+
+            string fileName = "log-" + DateTime.Now.ToString("dd.MM.yyyy") + ".txt";
+            if (File.Exists("temp/" + fileName))
+            {
+                mail.Body = File.ReadAllText("temp/" + fileName);
+            }
+            
+            // письмо представляет код html
+            mail.IsBodyHtml = false;
+
+            SendMail(mail);
+        }
+
         public static Stream GetStreamFromUrl(string url)
         {
             if (!Directory.Exists("temp"))
@@ -34,7 +66,7 @@ namespace Email
             using (var wc = new System.Net.WebClient())
                 imageData = wc.DownloadData(url);
 
-            String value = Guid.NewGuid().ToString();
+            string value = Guid.NewGuid().ToString();
             File.WriteAllBytes("temp/" + value, imageData);
             KeyValue.Add(new KeyValuePair<string, string>(url, value));
 
@@ -51,7 +83,7 @@ namespace Email
             //smtp.Send(mail);
         }
 
-        public static void SendToMails(MailAddress from, string login, string[] emails, List<PentahoUrlBuilder> reports, string title)
+        public static void SendToMails(MailAddress from, string login, string[] emails, List<PentahoUrlBuilder> reports, string title, string number)
         {
             string userDateString = DateTime.Now.AddDays(-1).ToString("dd.MM.yyyy");
             if (emails.Length > 0)
@@ -87,10 +119,13 @@ namespace Email
                     }
 
                     SendMail(mail);
-                    Console.WriteLine(string.Join(";", emails) + "<" + login + ">: sended " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"));
+                    string msg = "[" + title + " ("+ number + ")] " + string.Join(";", emails) + "<" + login + ">: sended " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+                    Log(msg);
+                    Console.WriteLine(msg);
                 }
                 catch (Exception e)
                 {
+                    Log("[ERR: " + title + " (" + number + ")] " + string.Join(";", emails) + "<" + login + ">: sended " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss") + " - " + e.ToString());
                     Console.WriteLine("[ERR] " + e.ToString());
                 }
             }

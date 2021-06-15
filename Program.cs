@@ -13,7 +13,14 @@ namespace Email
         static void Main(string[] args)
         {
             Program p = new Program();
+
+            if (Directory.Exists("temp"))
+            {
+                Directory.Delete("temp", true);
+            }
+
             Console.WriteLine("start processing: " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"));
+            Utilits.Log("send processing: " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"));
 
             dateFilter = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
             MailAddress from = new MailAddress("mysmtp1987@gmail.com", "Александр Краснов");
@@ -30,12 +37,9 @@ namespace Email
             // передача ответственным за УИК
             p.SendToUik(args[0], from);
 
-            if (Directory.Exists("temp"))
-            {
-                Directory.Delete("temp", true);
-            }
-
-            Console.WriteLine("send finished");
+            Utilits.Log("send finished " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"));
+            Utilits.SendReportMail(from);
+            Console.WriteLine("send finished " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"));
         }
 
         /// <summary>
@@ -57,9 +61,9 @@ namespace Email
                     reports.Add(new PentahoUrlBuilder("count_day_uik", "Ежедневный отчет по УИК - результаты ОДД Агитаторов", "n_uik=" + user.f_uik + "&d_date_now=" + dateFilter));
                     reports.Add(new PentahoUrlBuilder("count_period_uik", "Сводный отчет по УИК - результаты ОДД Агитаторов", "n_uik=" + user.f_uik));
 
-                    string[] emails = user.c_email.Replace(",", ";").Replace(" ", ";").Split(';');
+                    string[] emails = user.c_email.Trim().Replace(",", ";").Replace(" ", ";").Split(';');
 
-                    Utilits.SendToMails(from, user.c_login, emails, reports, "УИК");
+                    Utilits.SendToMails(from, user.c_login, emails, reports, "УИК", user.f_uik.ToString());
                 }
             }
         }
@@ -83,9 +87,9 @@ namespace Email
                     reports.Add(new PentahoUrlBuilder("count_day_sub", "Ежедневный окружной отчет по результатам ОДД Агитаторов", "f_division=" + user.f_division + "&n_gos_subdivision=" + user.n_gos_subdivision + "&d_date_now=" + dateFilter));
                     reports.Add(new PentahoUrlBuilder("count_period_sub", "Сводный окружной отчет по результатам ОДД Агитаторов", "f_division=" + user.f_division + "&n_gos_subdivision=" + user.n_gos_subdivision));
 
-                    string[] emails = user.c_email.Replace(",", ";").Replace(" ", ";").Split(';');
+                    string[] emails = user.c_email.Trim().Replace(",", ";").Replace(" ", ";").Split(';');
 
-                    Utilits.SendToMails(from, user.c_login, emails, reports, "окружной");
+                    Utilits.SendToMails(from, user.c_login, emails, reports, "окружной", user.f_division.ToString() + "-" + user.n_gos_subdivision.ToString());
                 }
             }
         }
@@ -118,9 +122,9 @@ namespace Email
                         reports.Add(new PentahoUrlBuilder("count_period_nov", "Сводный городской (НВЧ) отчет по результатам ОДД Агитаторов"));
                     }
 
-                    string[] emails = user.c_email.Replace(",", ";").Replace(" ", ";").Split(';');
+                    string[] emails = user.c_email.Trim().Replace(",", ";").Replace(" ", ";").Split(';');
 
-                    Utilits.SendToMails(from, user.c_login, emails, reports, "районный");
+                    Utilits.SendToMails(from, user.c_login, emails, reports, "районный", user.f_division.ToString());
                 }
             }
         }
@@ -145,9 +149,9 @@ namespace Email
             {
                 if (!string.IsNullOrEmpty(user.c_email))
                 {
-                    string[] emails = user.c_email.Replace(",", ";").Replace(" ", ";").Split(';');
+                    string[] emails = user.c_email.Trim().Replace(",", ";").Replace(" ", ";").Split(';');
 
-                    Utilits.SendToMails(from, user.c_login, emails, reports, "городской");
+                    Utilits.SendToMails(from, user.c_login, emails, reports, "городской", "0");
                 }
             }
         }
@@ -198,6 +202,7 @@ namespace Email
                             && uid.f_uik == null
                             && uid.n_gos_subdivision == null
                             && users.Contains(uid.f_user)
+                            orderby uid.f_division
                             select new UserInDivisionExtension()
                             {
                                 c_email = u.c_email,
@@ -233,6 +238,7 @@ namespace Email
                             && uid.f_uik == null
                             && uid.n_gos_subdivision != null
                             && users.Contains(uid.f_user)
+                            orderby uid.n_gos_subdivision
                             select new UserInDivisionExtension()
                             {
                                 c_email = u.c_email,
@@ -268,6 +274,7 @@ namespace Email
                             && uid.f_uik != null
                             && uid.n_gos_subdivision == null
                             && users.Contains(uid.f_user)
+                            orderby uid.f_uik
                             select new UserInDivisionExtension()
                             {
                                 c_email = u.c_email,
