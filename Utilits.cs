@@ -25,7 +25,7 @@ namespace Email
 
             if (KeyValue.Count(t => t.Key == url) > 0)
             {
-                String path = "temp/" + KeyValue.First(t => t.Key == url).Value;
+                string path = "temp/" + KeyValue.First(t => t.Key == url).Value;
                 return new MemoryStream(File.ReadAllBytes(path));
             }
 
@@ -48,7 +48,7 @@ namespace Email
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = new NetworkCredential("mysmtp1987@gmail.com", "Bussine$Perfect");
             smtp.EnableSsl = true;
-            smtp.Send(mail);
+            //smtp.Send(mail);
         }
 
         public static void SendToMails(MailAddress from, string login, string[] emails, List<PentahoUrlBuilder> reports, string title)
@@ -86,7 +86,7 @@ namespace Email
                         }
                     }
 
-                    Utilits.SendMail(mail);
+                    SendMail(mail);
                     Console.WriteLine(string.Join(";", emails) + "<" + login + ">: sended " + DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss"));
                 }
                 catch (Exception e)
