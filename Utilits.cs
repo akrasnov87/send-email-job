@@ -80,7 +80,7 @@ namespace Email
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = new NetworkCredential("mysmtp1987@gmail.com", "Bussine$Perfect");
             smtp.EnableSsl = true;
-            //smtp.Send(mail);
+            smtp.Send(mail);
         }
 
         public static void SendToMails(MailAddress from, string login, string[] emails, List<PentahoUrlBuilder> reports, string title, string number)
