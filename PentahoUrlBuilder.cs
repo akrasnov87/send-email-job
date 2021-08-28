@@ -6,7 +6,7 @@ namespace Email
 {
     public class PentahoUrlBuilder
     {
-        public static string ROOT_PATH = "http://kes.it-serv.ru/pentaho/api/repos/%3Apublic%3Avote%3A2021%3A";
+        public static string ROOT_PATH = "http://kes.it-serv.ru/pentaho/api/repos/%3Apublic%3Avote%3A2021%3A08%3A";
 
         private string Format { get; set; }
 
