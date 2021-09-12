@@ -85,7 +85,7 @@ namespace Email
 
         public static void SendToMails(MailAddress from, string login, string[] emails, List<PentahoUrlBuilder> reports, string title, string number)
         {
-            string userDateString = DateTime.Now.AddDays(-1).ToString("dd.MM.yyyy");
+            string userDateString = DateTime.Now.ToString("dd.MM.yyyy");
             if (emails.Length > 0)
             {
                 try
